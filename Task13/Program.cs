@@ -3,16 +3,33 @@
 78 -> третьей цифры нет
 32679 -> 6*/
 
+/* ЕСТЬ ВОПРОС - СМ. комментарий в конце текста*/
+
+// Ввод и проверка через строковую переменную - общий для всех способов
 Console.WriteLine("Введите число:");
-//int num=Convert.ToInt32(Console.ReadLine());
-int num=Convert.ToInt32(Console.ReadLine());
-if (num>99)
-    {
-    string txt=Convert.ToString(num);
-    Console.WriteLine("Вывод (текстовый)"+ txt.Length +" "+ txt[2]);
-    //Console.WriteLine($,"Вывод" {txt});
-    //int p=Convert.ToInt32((Math.Log10(num))%1);
-    int p=(int)((Math.Log10(num)))+1;
-    Console.WriteLine("Вывод "+ p);
+string? txt=Console.ReadLine();
+if (txt![0]=='-') 
+    {Console.WriteLine("Для учебной задачи предлагается ограничиться положительными числами");}
+else
+    {if (txt!.Length<3)
+        {Console.WriteLine("третьей цифры нет");}
+    else
+    // "Строковый" способ
+        {Console.WriteLine("третья цифра:       (строковый способ): "+txt[2]);
+    
+    //Чисто математический способ
+        int num=Convert.ToInt32(txt);   
+        double rangeNum=(int)((Math.Log10(num)))+1;
+        double p=((int)num%Math.Pow(10,rangeNum-2))/Math.Pow(10,rangeNum-3);
+        Console.WriteLine("третья цифра  :(математический способ): "+(int)p);
+    //Алгоритмический способ (честно: подсмотренный на третьем семинаре)
+        while (num>999)    
+            {num=num/10;}                                // здесь num безвозвратно портится, поэтому способ используется последним
+        Console.WriteLine("третья цифра :(алгоритмический способ): "+num%10);    
+        }
     }
-else Console.WriteLine("третьей цифры нет");
+    // К сожалению сверить ответы не удалось из-за проблем с конвертацией результатов в формат
+    //в котором удалось бы сравнить и соответственно оформить "красивый результат"
+
+    /* в конструкции double rangeNum=(int)((Math.Log10(num))) : (int) -отбрасывает дробную часть, 
+    но что это за "штука" такая (вытащенная из интернета) -не очень понятно (это не метод, а что?)*/
